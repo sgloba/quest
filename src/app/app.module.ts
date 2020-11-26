@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { TestComponent } from './components/test/test.component';
 import { Test2Component } from './components/test2/test2.component';
+import {FormsModule} from "@angular/forms";
 
 const routes: Routes = [
   { path: 'app-test', component: TestComponent},
@@ -21,7 +22,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   exports: [RouterModule],
   providers: [],
