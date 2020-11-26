@@ -1,1 +1,34 @@
-<p>test_1</p>
+<div class="input-wrap">
+  <h2 class="mrg" [ngStyle]="getStyle" [class.mail]="isTextEmail">{{text}}</h2>
+  <input
+    class="mrg"
+    type="text"
+    [(ngModel)]="text"
+    [placeholder]="text"
+  >
+</div>
+
+<button
+  class="mrg"
+  type="submit"
+  (click)="printPosts()"
+>
+  submit
+</button>
+
+<h3>test title</h3>
+<p>eum et est occaecati</p>
+
+<div class="post-wrap" *ngIf="post">
+  <h2 class="post-title">
+    {{post.title}}
+  </h2>
+  <p class="post-body">
+    {{post.body}}
+  </p>
+</div>
+
+<div *ngIf="!post">
+  <p>Nothing found</p>
+</div>
+
