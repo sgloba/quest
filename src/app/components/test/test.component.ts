@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import {checkMail} from '../../utils/email.utils';
+import {PostI, PostService} from "../../services/post.service";
+
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -7,33 +10,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private postService: PostService
+  ) {}
 
-  text:any = 'Type smth..'
-  mailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+  text: string = ''
+  post: PostI | undefined = {} as PostI;
 
-  checkType() {
-    if(this.text%2 === 0 && !isNaN(this.text)) {
-      //even
-      return {color: 'blue'}
+  get getStyle() {
+    if (+this.text % 2 === 0 && !isNaN(+this.text)) {
+      return { color: 'blue' }
     }
-    if(this.text%2 !== 0 && !isNaN(this.text)) {
-      //odd
-      return {color: 'red'}
+    if (+this.text % 2 !== 0 && !isNaN(+this.text)) {
+      return { color: 'red' };
     }
-    if(this.text.match(this.mailRegex)) {
-      //mail
-      return {
-        color: 'orange',
-        fontWeight: 'bold',
-        textShadow: '1px 1px 2px black'
-      }
-    }
-  return {color: 'black'}
+    return {};
+  }
+
+  get isTextEmail(): boolean {
+    return checkMail(this.text);
+  }
+
+  printPosts() {
+    this.postService.getPosts().subscribe((data) => {
+      this.post = data.find((post) => post.title === this.text);
+    });
   }
 
   ngOnInit(): void {
-    // this.checkType('12@213.com')
   }
 
 }
